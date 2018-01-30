@@ -73,6 +73,7 @@ public class BlogController {
         sessionDAO = new SessionDAO(blogDatabase);
 
         cfg = createFreemarkerConfiguration();
+        cfg.setDateTimeFormat("dd/MM/yyyy h:mm:ss.SSS a");
         setPort(8082);
         initializeRoutes();
     }

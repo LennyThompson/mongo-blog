@@ -21,7 +21,7 @@ public class BlogPostDAO {
     public BlogPostDAO(final MongoDatabase blogDatabase)
     {
         postsCollection = blogDatabase.getCollection("posts");
-        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy h:mm:ss a");
+        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy h:mm:ss.SSS a");
     }
 
     // Return a single post corresponding to a permalink
@@ -41,7 +41,11 @@ public class BlogPostDAO {
 
         // XXX HW 3.2,  Work Here
         // Return a list of DBObjects, each one a post from the posts collection
-        List<Document> posts = postsCollection.find().sort(new Document("date", -1)).limit(limit).into(new ArrayList<Document>());
+        List<Document> posts = postsCollection
+                                .find()
+                                .sort(new Document("date", -1).append("author", 1))
+                                .limit(limit)
+                                .into(new ArrayList<Document>());
 
         return posts;
     }
